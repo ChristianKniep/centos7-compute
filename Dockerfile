@@ -54,7 +54,9 @@ RUN yum install -y gsl libgomp
 
 # python-dependency
 RUN yum install -y python-docopt PyYAML
-
 RUN yum install -y nc
+
+# IB
+RUN yum install -y infiniband-diags perftest
 
 CMD /bin/supervisord -c /etc/supervisord.conf
