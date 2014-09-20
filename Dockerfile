@@ -55,5 +55,6 @@ RUN yum install -y gsl libgomp
 # python-dependency
 RUN yum install -y python-docopt PyYAML
 
+RUN yum install -y nc
 
 CMD /bin/supervisord -c /etc/supervisord.conf
