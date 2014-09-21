@@ -57,6 +57,14 @@ RUN yum install -y python-docopt PyYAML
 RUN yum install -y nc
 
 # IB
-RUN yum install -y infiniband-diags perftest
+RUN yum install -y infiniband-diags perftest 
+
+ADD id_rsa.pub /tmp/
+RUN cat /tmp/id_rsa.pub >> /root/.ssh/authorized_keys
+
+RUN yum install -y libmlx5 libmthca librdmacm-utils
+RUN yum install -y dapl dapl-devel dapl-devel-static dapl-utils ibacm libibcm libibcm-devel libibverbs libibverbs-devel libibverbs-devel-static libibverbs-utils libmlx4 libmlx5 libmlx5-devel librdmacm librdmacm-devel librdmacm-utils srptools
+
+RUN yum install -y make automake gcc-c++ openmpi-devel opensm
 
 CMD /bin/supervisord -c /etc/supervisord.conf
