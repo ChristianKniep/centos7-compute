@@ -41,6 +41,8 @@ RUN echo "        AddressFamily inet" >> /etc/ssh/ssh_config
 
 # SLURM
 RUN yum clean all;yum install -y slurm
+RUN sed -i -e 's/autostart=.*/autostart=true/' /etc/supervisord.d/munged.ini
+RUN sed -i -e 's/autostart=.*/autostart=true/' /etc/supervisord.d/slurmd.ini
 
 # etcd+skydns
 ADD usr/local/bin/etcdctl /usr/local/bin/etcdctl
@@ -68,6 +70,16 @@ RUN yum install -y dapl dapl-devel dapl-devel-static dapl-utils ibacm libibcm li
 RUN yum install -y make automake gcc-c++ openmpi-devel opensm
 # MPI
 RUN echo "2014-10-01.1";yum clean --disablerepo=* --enablerepo=qnib-common all
-RUN yum install -y qnib-openmpi1541 qnib-openmpi154
+RUN yum install -y qnib-openmpi1541 qnib-openmpi154 qnib-openmpi165 qnib-openmpi175 qnib-openmpi182
+
+# SETUP env
+RUN useradd -u 5000 -d /usr/local/etc/ -M slurm
+RUN mkdir -p /var/lib/slurm/; mkdir -p /var/log/slurm/; mkdir -p /var/run/slurm/; mkdir -p /var/spool/slurmd
+RUN chmod 755 /var/lib/slurm/ /var/log/slurm/ /var/run/slurm/ /var/spool/slurmd
+RUN chown slurm /var/lib/slurm/ /var/log/slurm/ /var/run/slurm/ /var/spool/slurmd
+
+# cluser
+RUN useradd -u 2000 -d /chome/cluser -M cluser
+
 
 CMD /bin/supervisord -c /etc/supervisord.conf
