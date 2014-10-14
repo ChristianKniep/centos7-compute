@@ -69,8 +69,8 @@ RUN yum install -y dapl dapl-devel dapl-devel-static dapl-utils ibacm libibcm li
 
 RUN yum install -y make automake gcc-c++ openmpi-devel opensm
 # MPI
-RUN echo "2014-10-01.1";yum clean --disablerepo=* --enablerepo=qnib-common all
-RUN yum install -y qnib-openmpi1541 qnib-openmpi154 qnib-openmpi165 qnib-openmpi175 qnib-openmpi182
+RUN echo "2014-10-06.1";yum clean --disablerepo=* --enablerepo=qnib-common all
+RUN yum install -y qnib-openmpi154 qnib-openmpi164 qnib-openmpi183
 
 # SETUP env
 RUN useradd -u 5000 -d /usr/local/etc/ -M slurm
